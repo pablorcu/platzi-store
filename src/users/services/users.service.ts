@@ -28,8 +28,8 @@ export class UsersService {
   findAll() {
     const apikey = this.configService.get('API_KEY');
     const dbname = this.configService.get('DATABASE_NAME');
-    console.log(apikey,dbname);
-    
+    console.log(apikey, dbname);
+
     return this.records;
   }
 

@@ -5,7 +5,7 @@ import { UsersController } from './controllers/users.controller';
 import { CustomersService } from './services/customers.service';
 import { CustomersController } from './controllers/customers.controller';
 
-import { ProductsModule } from "../products/products.module";
+import { ProductsModule } from '../products/products.module';
 
 @Module({
   imports: [ProductsModule],

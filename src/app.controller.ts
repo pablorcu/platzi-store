@@ -19,5 +19,4 @@ export class AppController {
   hellow() {
     return 'con /sas/';
   }
-
 }

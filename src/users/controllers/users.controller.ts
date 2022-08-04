@@ -43,7 +43,6 @@ export class UsersController {
     return this.recordService.findOne(id);
   }
 
-
   @Post()
   create(@Body() payload: CreateUserDto) {
     return this.recordService.create(payload);
