@@ -1,13 +1,46 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import * as Joi from 'joi';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductsController } from './controllers/products.controller';
-import { CategoriesController } from './controllers/categories.controller';
-
+import { UsersModule } from './users/users.module';
+import { ProductsModule } from './products/products.module';
+import { DatabaseModule } from './database/database.module';
+import { enviroments } from './enviroments';
+import config from './config';
 
 @Module({
-  imports: [],
-  controllers: [AppController, ProductsController, CategoriesController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      load: [config],
+      isGlobal: true,
+      validationSchema: Joi.object({
+        API_KEY: Joi.number().required(),
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+      }),
+    }),
+    HttpModule,
+    UsersModule,
+    ProductsModule,
+    DatabaseModule,
+  ],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: 'TAKS',
+      useFactory: async (http: HttpService) => {
+        const taks = await http
+          .get('https://jsonplaceholder.typicode.com/todos')
+          .toPromise();
+        return taks.data;
+      },
+      inject: [HttpService],
+    },
+  ],
 })
 export class AppModule {}
