@@ -26,10 +26,6 @@ export class CategoriesController {
     @Query('offset') offset: number = 0,
     @Query('brand') brand: string,
   ) {
-    // const {limit, offset } = params
-    // return {
-    //   message: `productos: limit=> ${limit} offset=> ${offset} , brand = ${brand}`,
-    // };
     return this.categoriesService.findAll();
   }
 
