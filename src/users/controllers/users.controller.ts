@@ -38,6 +38,11 @@ export class UsersController {
     return this.recordService.getOrderbyUser(id);
   }
 
+  @Get('tasks')
+  getTask() {
+    return this.recordService.getTasks();
+  }
+
   @Get(':id')
   getRecord(@Param('id', ParseIntPipe) id: number) {
     return this.recordService.findOne(id);
